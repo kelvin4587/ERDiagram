@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="js/lib/jquery-2.1.4.min.js"></script>7
+    <link href="js/lib/contextmenu/jquery.contextMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/lib/contextmenu/jquery.contextMenu.min.js"></script>
+    <script src="js/lib/contextmenu/jquery.ui.position.min.js"></script>
+    <style>
+        #contextMenu {
+            position: absolute;
+            display:none;
+        }
+    </style>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script>
+        $(function() {
+            var $contextMenu = $("#contextMenu");
+            $("body").on("contextmenu", "table tr", function(e) {
+                $contextMenu.css({
+                    display: "block",
+                    left: e.pageX,
+                    top: e.pageY
+                });
+                return false;
+            });
+
+            $contextMenu.on("click", "a", function() {
+                $contextMenu.hide();
+            });
+            $.contextMenu({
+                selector: '.context-menu-one',
+                callback: function(key, options) {
+                    var m = "clicked: " + key;
+                    window.console && console.log(m) || alert(m);
+                },
+                items: {
+                    "edit": {name: "Edit", icon: "edit"},
+                    "cut": {name: "Cut", icon: "cut"},
+                    copy: {name: "Copy", icon: "copy"},
+                    "paste": {name: "Paste", icon: "paste"},
+                    "delete": {name: "Delete", icon: "delete"},
+                    "sep1": "---------",
+                    "quit": {name: "Quit", icon: function(){
+                        return 'context-menu-icon context-menu-icon-quit';
+                    }}
+                }
+            });
+
+        });
+    </script>
+    <meta charset=utf-8 />
+    <title>JS Bin</title>
+</head>
+<body onload="prettyPrint()">
+
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+    </tr>
+    </tbody>
+</table>
+
+<div id="contextMenu" class="dropdown clearfix">
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
+        <li><a tabindex="-1" href="#">Action</a></li>
+        <li><a tabindex="-1" href="#">Another action</a></li>
+        <li><a tabindex="-1" href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a tabindex="-1" href="#">Separated link</a></li>
+    </ul>
+</div>
+<span class="context-menu-one btn btn-neutral">right click me</span>
+</body>
+</html>

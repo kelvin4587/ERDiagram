@@ -1,3 +1,7 @@
+#contextMenu {
+    position: absolute;
+    display:none;
+}
 #container {
     min-height: 700px;
     position: relative;

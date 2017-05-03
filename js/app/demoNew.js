@@ -50,7 +50,7 @@ function CreateModel(ui, selector) {
         var modelId = $(ui.draggable).attr("id");
         var id = modelId + "_model_" + modelCounter++;
         var type = $(ui.draggable).attr("model_type");
-        $(selector).append('<div class="model" id="' + id
+        $(selector).append('<div class="model model-property-plant" id="' + id
             + '" modelType="' + type + '">'
             + getModelHtml(title,id) + '</div>');
         var left = parseInt(ui.offset.left - $(selector).offset().left);
@@ -69,6 +69,36 @@ function CreateModel(ui, selector) {
             },
             stop: function () {
                 instance.repaintEverything();
+            }
+        });
+        $.contextMenu({
+            selector: '.context-menu-setting',
+            callback: function(key, options) {
+                if(key=='delete'){
+                    var objectDiagramId=this.context.id;
+                    objectDiagramId=objectDiagramId.substring(0,objectDiagramId.length-13);
+                    removeObjectDiagram(objectDiagramId);
+                }
+            },
+            items: {
+                "edit": {name: "编辑", icon: "edit"},
+                "delete": {name: "删除", icon: "delete"},
+                "sep1": "---------",
+                "quit": {name: "退出", icon: function(){
+                    return 'context-menu-icon context-menu-icon-quit';
+                }}
+            }
+        });
+        $(".model-property-plant").droppable({
+            scope: "object",
+            drop: function (event, ui) {
+                bootbox.setLocale("zh_CN");
+                var objectId=this.id;
+                bootbox.prompt("请输入属性名", function(propertyName){
+                    var propertyList=$('#'+objectId+'_property_list');
+                    var propertyHtml='<li><input type="checkbox">'+propertyName+'</li>';
+                    propertyList.append(propertyHtml);
+                });
             }
         });
     });
@@ -101,31 +131,13 @@ function getModelHtml(title,id) {
     var list='';
     list += '<h4><span>'
         + title
-        + '</span><span href="javascript:void(0)" class="pull-right" onclick="removeElement(this);"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>'
+        + '</span><span href="javascript:void(0)" class="context-menu-setting pull-right" id="'+id+'_setting_menu"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>'
         + '</h4>';
-    list += '<ul id="'+id+'-property-list">';
+    list += '<ul id="'+id+'_property_list">';
     list += '</ul>';
     return list;
 }
-/**
- * 循环遍历properties
- * @param obj
- * @returns {String}
- */
-function parseProperties(obj) {
-    var str = "";
-    for (var v in obj) {
-        if (obj[v].properties == undefined) {
-            str += '<li><input type="checkbox" name="'
-                + v + '" value="'
-                + v + '">'
-                + obj[v].des + '</li>';
-        } else {
-            str += arguments.callee(obj[v].properties);
-        }
-    }
-    return str;
-}
+
 //设置连接Label的label
 function init(conn) {
     var label_text;
@@ -184,8 +196,8 @@ function setlabel(conn) {
     }
 }
 //删除节点
-function removeElement(obj) {
-    var element = $(obj).parents(".model");
+function removeObjectDiagram(ID) {
+    var element = $("#"+ID);
     if (confirm("确定删除该模型？"))
         instance.remove(element);
 }
@@ -218,5 +230,6 @@ $(function () {
             instance.detach(conn);
         }
     });
+
 });
 

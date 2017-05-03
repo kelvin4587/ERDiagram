@@ -205,12 +205,7 @@ function getOptions(obj,head)
 	return str;
 }
 //setlabel
-function
-
-
-
-
-setlabel(conn)
+function setlabel(conn)
 {
 	conn.getOverlay("label").setLabel($("#select_sourceList").val() 
 			+ ' ' 
