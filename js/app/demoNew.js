@@ -4,7 +4,7 @@
 
 
 /**模型计数器*/
-var modelCounter = 0;
+var modelCounter = 1;
 /**
  * 初始化一个jsPlumb实例
  */
@@ -46,7 +46,7 @@ instance.importDefaults({
  */
 function CreateModel(ui, selector) {
     bootbox.setLocale("zh_CN");
-    bootbox.prompt("请输入对象名", function(title){
+    bootbox.prompt({value:"对象"+modelCounter,title:"请输入对象名", callback:function(title){
         var modelId = $(ui.draggable).attr("id");
         var id = modelId + "_model_" + modelCounter++;
         var type = $(ui.draggable).attr("model_type");
@@ -70,6 +70,13 @@ function CreateModel(ui, selector) {
             stop: function () {
                 instance.repaintEverything();
             }
+        });
+        $("#" + id + "_title").dblclick(function(){
+            bootbox.setLocale("zh_CN");
+            var title=$(this);
+            bootbox.prompt("请输入对象名", function(objectName){
+                title.html(objectName);
+            });
         });
         $.contextMenu({
             selector: '.context-menu-setting',
@@ -98,10 +105,12 @@ function CreateModel(ui, selector) {
                     var propertyList=$('#'+objectId+'_property_list');
                     var propertyHtml='<li><input type="checkbox">'+propertyName+'</li>';
                     propertyList.append(propertyHtml);
+                    instance.repaintEverything();
                 });
             }
         });
-    });
+
+    }});
 
 }
 //端点样式设置
@@ -129,11 +138,16 @@ var connectorPaintStyle = {
  */
 function getModelHtml(title,id) {
     var list='';
-    list += '<h4><span>'
+    list += '<h4><span id="'+id+'_title">'
         + title
         + '</span><span href="javascript:void(0)" class="context-menu-setting pull-right" id="'+id+'_setting_menu"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>'
         + '</h4>';
     list += '<ul id="'+id+'_property_list">';
+    list += '<li><input type="checkbox" name="object_id" value="object_id">ID</li>';
+    list += '<li><input type="checkbox" name="created_by" value="created_by">createdBy</li>';
+    list += '<li><input type="checkbox" name="created_time" value="created_time">createTime</li>';
+    list += '<li><input type="checkbox" name="last_updated_by" value="last_updated_by">lastUpdatedBy</li>';
+    list += '<li><input type="checkbox" name="last_updated_time" value="last_updated_time">lastUpdatedTime</li>';
     list += '</ul>';
     return list;
 }
