@@ -1,0 +1,62 @@
+#container {
+    min-height: 700px;
+    position: relative;
+    border: 1px solid #666666;
+    background-color: #ffffff;
+    border-radius: 5px;
+    z-index: 0;
+    overflow: auto;
+}
+#container .model {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 0;
+    min-width: 160px;
+}
+#container .model h4{
+    background-color: #438eb9;
+    text-align: center;
+    background-image: none;
+    font-size: 16px;
+    color: #fff;
+    border: 1px solid #438eb9;
+    margin: 0px;
+    height: 35px;
+    vertical-align: middle;
+    padding: 0 3px;
+    line-height: 30px;
+}
+#container .model h4 a{
+    color: #fff!important;
+}
+#container .model ul{
+    border: 1px solid #62a8d1;
+    max-height: 320px;
+    overflow: auto;
+    margin: 0px;
+    width: 100%;
+    padding: 0px;
+}
+#container .model ul li{
+    border-bottom: 1px solid #62a8d1;
+    font-size: 15px;
+    list-style-type: none;
+}
+.jtk-endpoint, .endpointTargetLabel, .endpointSourceLabel {
+    cursor: pointer;
+}
+#leftMenu li{
+    height: 40px;
+    width: 150px;
+    background-color: #438eb9;
+    border-radius: 5px;
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 10px;
+    list-style-type: none;
+    vertical-align: middle;
+    line-height: 40px;
+    z-index: 1;
+    cursor: pointer;
+}

@@ -104,7 +104,7 @@ var hollowCircle = {
 		radius: 6
 	},		//端点的颜色样式
 	isSource: true, //是否可拖动（作为连接线起点）
-	connector: ["Flowchart", {stub: 30, gap: 0, coenerRadius: 0, alwaysRespectStubs: true, midpoint: 0.5 }],
+	connector: ["Bezier"],
 	isTarget: true, //是否可以放置（连接终点）
 	maxConnections: -1
 };
@@ -128,7 +128,7 @@ function getModelElementStr(type)
 				list += '<h4><span index="' 
 					+ model_data.index + '">' 
 					+ model_data.name 
-					+ '</span><a href="javascript:void(0)" class="pull-right" onclick="removeElement(this);">X</a>'
+					+ '</span><span href="javascript:void(0)" class="pull-right" onclick="removeElement(this);"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>'
 					+ '</h4>';
 				list += '<ul>'
 				var properties = model_data.properties;
@@ -205,7 +205,12 @@ function getOptions(obj,head)
 	return str;
 }
 //setlabel
-function setlabel(conn)
+function
+
+
+
+
+setlabel(conn)
 {
 	conn.getOverlay("label").setLabel($("#select_sourceList").val() 
 			+ ' ' 
