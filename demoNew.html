@@ -37,7 +37,7 @@
         </div>
     </div>
     <!--关系链接模态窗口-->
-    <div id="link-modal" class="modal fade" aria-labelledby="link-modal-label" aria-hidden="true">
+    <div id="link_modal" class="modal fade" aria-labelledby="link-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -49,42 +49,21 @@
                     <option value="false">单向</option>
                     <option value="true">双向</option>
                 </select>
-                    条件:<select id="select-source-list">
+                    对应关系:<select id="relationShip">
+                    <option value="oneToOne">一对一</option>
+                    <option value="oneToMany">一对多</option>
+                    <option value="manyToMany">多对多</option>
                 </select>
-                    <select id="select-comparison">
+                    条件:<select id="select_source_list">
+                </select>
+                    <select id="select_comparison">
                         <option value="=" selected="selected">=</option>
                     </select>
-                    <select id="select-target-list">
+                    <select id="select_target_list">
                     </select>
                 </div>
                 <div class="modal-footer">
-                    <button id="link-submit" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="object-modal" class="modal fade" aria-labelledby="object-modal-label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="object-modal-label">对象定义窗口</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        <fieldset>
-                            <div class="control-group">
-                                <label class="control-label">对象名</label>
-                                <div class="controls">
-                                    <input type="text" placeholder="placeholder" class="input-xlarge" id="object-name">
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button id="submit_label" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                    <button id="link_submit" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
                 </div>
             </div>
         </div>

@@ -122,7 +122,7 @@ var hollowCircle = {
         radius: 6
     },		//端点的颜色样式
     isSource: true, //是否可拖动（作为连接线起点）
-    connector: ["Bezier"],
+    connector: ["Bezier", { curviness: 140 } ],
     isTarget: true, //是否可以放置（连接终点）
     maxConnections: -1
 };
@@ -159,53 +159,42 @@ function removeProperty(property) {
 //设置连接Label的label
 function init(conn) {
     var label_text;
-    $("#select_sourceList").empty();
-    $("#select_targetList").empty();
-    var sourceName = $("#" + conn.sourceId).attr("modelType");
-    var targetName = $("#" + conn.targetId).attr("modelType");
-    for (var i = 0; i < metadata.length; i++) {
-        for (var obj in metadata[i]) {
-            if (obj == sourceName) {
-                var optionStr = getOptions(metadata[i][obj].properties, metadata[i][obj].name);
-                $("#select_sourceList").append(optionStr);
-            } else if (obj == targetName) {
-                var optionStr = getOptions(metadata[i][obj].properties, metadata[i][obj].name);
-                $("#select_targetList").append(optionStr);
-            }
-        }
-    }
-    $("#submit_label").unbind("click");
-    $("#submit_label").on("click", function () {
+    $("#select_source_list").empty();
+    $("#select_target_list").empty();
+    var sourceId = $("#" + conn.sourceId).attr('id');
+    var targetId = $("#" + conn.targetId).attr('id');
+    var optionStr = getOptionsHtml(sourceId);
+    $("#select_source_list").append(optionStr);
+    optionStr = getOptionsHtml(targetId);
+    $("#select_target_list").append(optionStr);
+    $("#link_submit").unbind("click");
+    $("#link_submit").on("click", function () {
         setlabel(conn);
     });
-    $("#myModal").modal();
+    $("#link_modal").modal();
 }
 /**
  * 获取option
  * @param obj
  * @returns {String}
  */
-function getOptions(obj, head) {
-    var str = "";
-    for (var v in obj) {
-        if (obj[v].properties == undefined) {
-            var val = head + '.' + obj[v].des;
-            str += '<option value="' + val + '">'
-                + val
-                + '</option>';
-        } else {
-            str += arguments.callee(obj[v].properties, head);
-        }
+function getOptionsHtml(objectId) {
+    var properties=$('#'+objectId+'_property_list').children();
+    var html='';
+    for(var i=0;i<properties.length;i++){
+        html += '<option value="' + properties[i].innerText + '">'
+             +properties[i].innerText
+             +'</option>';
     }
-    return str;
+    return html;
 }
 //setlabel
 function setlabel(conn) {
-    conn.getOverlay("label").setLabel($("#select_sourceList").val()
+    conn.getOverlay("label").setLabel($("#select_source_list").val()
         + ' '
         + $("#select_comparison").val()
         + ' '
-        + $("#select_targetList").val());
+        + $("#select_target_list").val());
     if ($("#twoWay").val() == "true") {
         conn.setParameter("twoWay", true);
     } else {
