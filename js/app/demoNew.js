@@ -103,7 +103,7 @@ function CreateModel(ui, selector) {
                 var objectId=this.id;
                 bootbox.prompt("请输入属性名", function(propertyName){
                     var propertyList=$('#'+objectId+'_property_list');
-                    var propertyHtml='<li><input type="checkbox">'+propertyName+'</li>';
+                    var propertyHtml='<li><input type="checkbox">'+propertyName+'<span href="javascript:void(0)" class="pull-right" onclick="removeProperty(this);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span></li>';
                     propertyList.append(propertyHtml);
                     instance.repaintEverything();
                 });
@@ -143,15 +143,19 @@ function getModelHtml(title,id) {
         + '</span><span href="javascript:void(0)" class="context-menu-setting pull-right" id="'+id+'_setting_menu"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>'
         + '</h4>';
     list += '<ul id="'+id+'_property_list">';
-    list += '<li><input type="checkbox" name="object_id" value="object_id">ID</li>';
-    list += '<li><input type="checkbox" name="created_by" value="created_by">createdBy</li>';
-    list += '<li><input type="checkbox" name="created_time" value="created_time">createTime</li>';
-    list += '<li><input type="checkbox" name="last_updated_by" value="last_updated_by">lastUpdatedBy</li>';
-    list += '<li><input type="checkbox" name="last_updated_time" value="last_updated_time">lastUpdatedTime</li>';
+    list += '<li><input type="checkbox" name="object_id" value="object_id">ID<span href="javascript:void(0)" class="pull-right" onclick="removeProperty(this);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span></li>';
+    list += '<li><input type="checkbox" name="created_by" value="created_by">createdBy<span href="javascript:void(0)" class="pull-right" onclick="removeProperty(this);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span></li>';
+    list += '<li><input type="checkbox" name="created_time" value="created_time">createTime<span href="javascript:void(0)" class="pull-right" onclick="removeProperty(this);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span></li>';
+    list += '<li><input type="checkbox" name="last_updated_by" value="last_updated_by">lastUpdatedBy<span href="javascript:void(0)" class="pull-right" onclick="removeProperty(this);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span></li>';
+    list += '<li><input type="checkbox" name="last_updated_time" value="last_updated_time">lastUpdatedTime<span href="javascript:void(0)" class="pull-right" onclick="removeProperty(this);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span></li>';
     list += '</ul>';
     return list;
 }
-
+//删除对象属性
+function removeProperty(property) {
+    $(property).parent().remove();
+    instance.repaintEverything();
+}
 //设置连接Label的label
 function init(conn) {
     var label_text;
