@@ -27,6 +27,24 @@ var instance = jsPlumb.getInstance({
             direction: -1,
             id: "arrow_backwards"
         }],
+        ["Arrow", {
+            location: 1,
+            visible: false,
+            width: 11,
+            length: 11,
+            direction: 1,
+            foldback:2,
+            id: "multi_arrow_forwards"
+        }],
+        ["Arrow", {
+            location: 0,
+            visible: false,
+            width: 11,
+            length: 11,
+            direction: -1,
+            foldback:2,
+            id: "multi_arrow_backwards"
+        }],
         ["Label", {
             location: 0.5,
             id: "label",
@@ -188,7 +206,7 @@ function getOptionsHtml(objectId) {
     }
     return html;
 }
-//setlabel
+//设置连线的label和arrow
 function setlabel(conn) {
     conn.getOverlay("label").setLabel($("#select_source_list").val()
         + ' '
@@ -197,9 +215,18 @@ function setlabel(conn) {
         + $("#select_target_list").val());
     if ($("#twoWay").val() == "true") {
         conn.setParameter("twoWay", true);
+        if ($("#relationShip").val() == "manyToMany"){
+            conn.hideOverlay("arrow_backwards");
+            conn.hideOverlay("arrow_forwards");
+            conn.showOverlay("multi_arrow_forwards");
+            conn.showOverlay("multi_arrow_backwards");
+        }
     } else {
         conn.setParameter("twoWay", false);
         conn.hideOverlay("arrow_backwards");
+        if ($("#relationShip").val() == "oneToMany"){
+            conn.showOverlay("multi_arrow_backwards");
+        }
     }
 }
 //删除节点
