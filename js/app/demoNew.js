@@ -1,3 +1,8 @@
+//删除对象属性
+function removeProperty(property) {
+    $(property).parent().remove();
+    instance.repaintEverything();
+}
 $(function () {
     /**模型计数器*/
     var modelCounter = 1;
@@ -197,12 +202,6 @@ $(function () {
         list += '<li id="' + id + '_property_4"><input type="checkbox" name="last_updated_time" value="last_updated_time">lastUpdatedTime<span href="javascript:void(0)" class="pull-right" onclick="removeProperty(this);"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span></li>';
         list += '</ul>';
         return list;
-    }
-
-//删除对象属性
-    function removeProperty(property) {
-        $(property).parent().remove();
-        instance.repaintEverything();
     }
 
 //设置连接Label的label
